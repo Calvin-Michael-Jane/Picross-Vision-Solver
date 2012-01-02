@@ -5,14 +5,14 @@
 import Image
 
 def detect(picture):
-    return None # puzzle grid
+    return [(0,0),(1,0),(1,1),(0,1)] # puzzle grid
 
 
 # testing main
 if __name__=='__main__':
-    test_pic = './picture.jpg'
+    test_pic = './testpicture.jpg'
     image = Image.open(test_pic)
-    puzzlegrid = DetectPuzzle.detect(image)
+    puzzlegrid = detect(image)
     print puzzlegrid
 
 
