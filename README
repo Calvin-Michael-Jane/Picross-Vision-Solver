@@ -1,0 +1,12 @@
+Webcam-based solver for the DS game, Picross.
+
+Consists of the following stages in order:
+
+GetPicture
+AntiSkew
+DetectGrid
+FindNumbers
+OCRNumbers
+PicrossSolver
+DisplayPuzzle
+
