@@ -8,6 +8,8 @@ class PuzzleRep:
         self.top = top
         self.side = side
 
+# A SolutionRep.solution is a 2D boolean array representing
+# which boxes within the puzzle should be filled in.
 class SolutionRep:
     def __init__(self, two_d_bool_array):
         self.solution = two_d_bool_array

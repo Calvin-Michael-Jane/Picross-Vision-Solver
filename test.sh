@@ -1,6 +1,6 @@
 #!/bin/bash
 # script to run all of the testing mains
-# for the picross pieces
+# for the classes used by picross.py
 echo 'running main picross solver'
 python2.7 picross.py
 echo 'running GetPicture'

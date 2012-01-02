@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-# Return the picture for use in the Picross Solver
-# May return a constant picture or a web camera image
+# Return the input picture after being processed for skew
+# by checking to see the orientation of the strongest lines
+# using line detection.
 import Image
 import ImageShow
 

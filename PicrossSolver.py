@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-# Return the picture for use in the Picross Solver
-# May return a constant picture or a web camera image
+# Return the solution to the puzzle given as input.
+# Solution is a SolutionRep. Puzzle is a PuzzleRep
+# A SolutionRep.solution should be a 2D Boolean array
 import Image
 import Representations
 
