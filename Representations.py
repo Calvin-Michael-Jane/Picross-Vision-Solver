@@ -2,11 +2,18 @@
 
 # Represents the numbers found that represent the entire puzzle.
 # Numbers are found on the `top` and the `side` in 2D arrays.
-
 class PuzzleRep:
     def __init__(self, top, side):
         self.top = top
         self.side = side
+        
+# Represents dimensions of grid determined by DetectGrid.
+# A GridRep.grid is an array of coordinates of the image grid corners.
+# GridRep.cell_length is the length of the grid squares.
+class GridRep:
+    def __init__(self, grid, cell_length):
+        self.grid = grid
+        self.cell_length = cell_length
 
 # A SolutionRep.solution is a 2D boolean array representing
 # which boxes within the puzzle should be filled in.

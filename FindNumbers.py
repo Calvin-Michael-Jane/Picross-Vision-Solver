@@ -6,7 +6,7 @@ import Image
 import DetectGrid
 
 def find_numbers(puzzlegrid, skewless_picture):
-    return [(0,0), (1,1)]# number positions
+    return [(0,0), (1,1)] # number positions
 
 
 # testing main
