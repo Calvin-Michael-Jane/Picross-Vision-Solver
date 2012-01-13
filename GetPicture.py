@@ -9,10 +9,6 @@ test_pic = './testpicture.jpg'
 
 def picture():
     image = Image.open(test_pic)
-    pixels = image.load()
-    #for x in range(w):
-    #    for y in range(h):
-    #        pix = pixels[x, y]
     return image # picture
 
 

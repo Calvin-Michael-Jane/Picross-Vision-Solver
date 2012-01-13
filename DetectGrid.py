@@ -6,8 +6,8 @@ import Image
 import Representations
 
 def detect(picture):
-    grid = [(0,0),(1,0),(1,1),(0,1)]; # grid corners
-    cell_length = 0;
+    grid = [(4,4),(10,4),(10,10),(4,10)]; # grid corners
+    cell_length = 2;
     gr = Representations.GridRep(grid, cell_length)
     return gr # grid representation
 
