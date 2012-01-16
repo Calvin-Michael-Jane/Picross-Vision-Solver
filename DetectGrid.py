@@ -196,7 +196,7 @@ def detect_hv_lines(filtered,direction):
 
     num_removed = 1
     while num_removed > 0:
-        print "coords: {}".format(coords)
+        print "coords: ", coords
         (coords,num_removed) = clean_lines(coords)
         print "num removed: ", num_removed
         
@@ -214,7 +214,7 @@ def clean_lines(coords):
     cleaned_coords = []
     for coord in coords:
         space = coord - prev_coord
-        print "spaces: {}".format(space)
+        print "spaces: ", space
         if space >= min_space:
             cleaned_coords.append(prev_coord)
         prev_coord = coord
@@ -249,7 +249,7 @@ def clean_lines(coords):
             cleaned_coords.remove(prev_coord)
             avg_point = floor((diff / 2) + prev_coord)
             cleaned_coords.insert(0,avg_point)
-            print "avg point: {} added".format(avg_point)
+            print "avg point: ", avg_point, " added"
             num_removed+=1
         prev_coord = coord
 

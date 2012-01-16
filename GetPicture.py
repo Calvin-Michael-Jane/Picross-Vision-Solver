@@ -8,7 +8,7 @@ import ImageDraw
 import prewitt
 
 #test_pic = './testpicture.jpg'
-test_pic = './images/blue_9.jpg'
+test_pic = './images/webcam.jpg'
 
 def picture():
     image = Image.open(test_pic)
