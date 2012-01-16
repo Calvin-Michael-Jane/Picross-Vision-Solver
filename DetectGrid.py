@@ -11,7 +11,7 @@ import prewitt
 from math import floor
 
 global_board_size = 10
-DRAW = False
+DRAW = True
 
 def detect(picture):
     grid = [(4,4),(10,4),(10,10),(4,10)] # grid corners

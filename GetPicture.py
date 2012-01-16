@@ -123,7 +123,7 @@ def picture(pic_name, test_pic):
         draw.line((0, y2, width, y2), fill=128)
         del draw
     ImageShow.show(both, 'with points')
-    both.save('./images/intermediate/' + pic_name + '_getpicture_precrop.jpg');
+    both.save('./images/intermediate/' + pic_name + '_getpicture_precrop.jpg')
     
     # crop image
     BUFFER = 5
@@ -133,7 +133,7 @@ def picture(pic_name, test_pic):
     max_y = min(height - 1, max_y + BUFFER)
     image = image.crop([min_x, min_y, max_x, max_y]);
     
-    image.save('./images/intermediate/' + pic_name + '_getpicture_cropped.jpg');
+    image.save('./images/intermediate/' + pic_name + '_getpicture_cropped.jpg')
     
     return image # picture
 

@@ -8,8 +8,8 @@ import ImageShow
 import ImageDraw
 import Representations
 
-TRAIN = True # produces images for training if true
-DRAW = False
+TRAIN = False # produces images for training if true
+DRAW = True
 
 def find_numbers(puzzlegrid, skewless_picture, pic_name):
     positions = []
@@ -115,6 +115,7 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
             draw.rectangle([ptx-BOXSIZE, pty-BOXSIZE, ptx+BOXSIZE, pty+BOXSIZE], fill=128)
         del draw
         ImageShow.show(skewless_picture, 'with points')
+        skewless_picture.save('./images/intermediate/' + pic_name + '_foundnumbers.jpg')
     
     # save training images
     if TRAIN:

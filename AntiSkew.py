@@ -10,7 +10,7 @@ import math
 
 DRAW = False
 
-def fix_skew(picture):
+def fix_skew(pic_name, picture):
     accumulator = {} # (theta, rho): num_votes
     found_points = {}
     rotation = 0;
@@ -66,6 +66,7 @@ def fix_skew(picture):
             draw.rectangle([ptx-BOXSIZE, pty-BOXSIZE, ptx+BOXSIZE, pty+BOXSIZE], fill=128)
         del draw
         ImageShow.show(picture, 'with points')
+        image.save('./images/intermediate/' + pic_name + '_getpicture_line.jpg')
     
     # perform rotation & composite to make bkg white
     # source: http://stackoverflow.com/questions/5252170/
@@ -77,15 +78,17 @@ def fix_skew(picture):
     width, height = picture.size
     
     ImageShow.show(picture, 'anti-skewed')
+    picture.save('./images/intermediate/' + pic_name + '_antiskewed.jpg')
     
     return picture # picture
 
 
 # testing main
 if __name__=='__main__':
-    test_pic = './images/blue_9_crop.jpg'
+    pic_name = 'blue_9_crop'
+    test_pic = './images/' + pic_name + '.jpg'
     image = Image.open(test_pic)
-    fixed = fix_skew(image)
+    fixed = fix_skew(pic_name, image)
     ImageShow.show(fixed, 'skew removed')
 
 
