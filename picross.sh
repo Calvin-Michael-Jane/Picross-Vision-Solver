@@ -10,6 +10,6 @@ sleep 1
 imagesnap -> snapshot.jpg
 echo "GOT IT"
 python2.7 ReadPic.py
-
+open snapshot_e.jpg
 
 
