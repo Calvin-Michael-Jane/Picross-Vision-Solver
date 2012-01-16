@@ -9,8 +9,9 @@ import prewitt
 
 #test_pic = './testpicture.jpg'
 #test_pic = './images/webcam.jpg'
+DRAW = True
 
-def picture(test_pic):
+def picture(pic_name, test_pic):
     image = Image.open(test_pic)
     
     # flip along vertical axis
@@ -114,13 +115,15 @@ def picture(test_pic):
     min_y = min(y1, y2)
     max_y = max(y1, y2)
     
-    draw = ImageDraw.Draw(both)
-    draw.line((x1, 0, x1, height), fill=128)
-    draw.line((x2, 0, x2, height), fill=128)
-    draw.line((0, y1, width, y1), fill=128)
-    draw.line((0, y2, width, y2), fill=128)
-    del draw
+    if DRAW:
+        draw = ImageDraw.Draw(both)
+        draw.line((x1, 0, x1, height), fill=128)
+        draw.line((x2, 0, x2, height), fill=128)
+        draw.line((0, y1, width, y1), fill=128)
+        draw.line((0, y2, width, y2), fill=128)
+        del draw
     ImageShow.show(both, 'with points')
+    both.save('./images/intermediate/' + pic_name + '_getpicture_precrop.jpg');
     
     # crop image
     BUFFER = 5
@@ -130,12 +133,14 @@ def picture(test_pic):
     max_y = min(height - 1, max_y + BUFFER)
     image = image.crop([min_x, min_y, max_x, max_y]);
     
+    image.save('./images/intermediate/' + pic_name + '_getpicture_cropped.jpg');
+    
     return image # picture
 
 
 if __name__=='__main__':
-    picture()
-    ImageShow.show(picture(), "window title")
+    result = picture('webcam', './images/webcam.jpg')
+    ImageShow.show(result, "window title")
 
 
 

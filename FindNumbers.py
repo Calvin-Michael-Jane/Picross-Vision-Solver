@@ -21,6 +21,10 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
     min_y = int(puzzlegrid.grid[0][1])
     max_y = int(puzzlegrid.grid[1][1])
     
+    # sort coordinates in ascending order
+    puzzlegrid.x_coords = sorted(puzzlegrid.x_coords)
+    puzzlegrid.y_coords = sorted(puzzlegrid.y_coords)
+    
     print "min x, max x: ", min_x,  max_x
     print "min_y, max_y: ", min_y,  max_y
     

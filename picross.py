@@ -17,7 +17,7 @@ test_pic = './images/' + pic_name + '.jpg'
 
 # main
 if __name__=='__main__':
-    #original_picture = GetPicture.picture(test_pic)
+    #original_picture = GetPicture.picture(pic_name, test_pic)
     original_picture = Image.open(test_pic)
     skewless_picture = AntiSkew.fix_skew(original_picture)
     puzzlegrid = DetectGrid.detect_lines(skewless_picture,"test")
