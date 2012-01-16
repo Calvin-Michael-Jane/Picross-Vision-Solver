@@ -47,8 +47,8 @@ def fix_skew(picture):
             max_votes = accumulator[key] # num_votes
             max_key = key
     
-    #print "votes: {}".format(max_votes)
-    print "key: {}".format(max_key)
+    print "votes: ", max_votes
+    print "key: ", max_key
     
     # draw points associated with max key
     # find min y value to crop
@@ -72,9 +72,6 @@ def fix_skew(picture):
     white = Image.new('RGBA', picture.size, (255,)*4)
     picture = Image.composite(picture, white, picture)
     width, height = picture.size
-    
-    Y_BUFFER = 10
-    picture = picture.crop([0, min_y + Y_BUFFER, width, height]);
     
     return picture # picture
 
