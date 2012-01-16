@@ -9,7 +9,7 @@ import prewitt
 
 #test_pic = './testpicture.jpg'
 #test_pic = './images/webcam.jpg'
-DRAW = True
+DRAW = False
 
 def picture(pic_name, test_pic):
     image = Image.open(test_pic)

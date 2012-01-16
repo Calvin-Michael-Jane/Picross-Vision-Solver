@@ -8,10 +8,11 @@ import ImageShow
 import ImageDraw
 import Representations
 
-TRAIN = False # produces images for training if true
+TRAIN = True # produces images for training if true
 DRAW = False
 
 def find_numbers(puzzlegrid, skewless_picture, pic_name):
+    positions = []
     width, height = skewless_picture.size
     print "image size: ", width, height
     
@@ -34,13 +35,8 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
     
     # calculate average change in color per cell
     # compare to threshold, if greater, has number
-    THRES = 2000 #??
-    
-    #draw = ImageDraw.Draw(skewless_picture)
-    #for y in range(min_y, 0, -puzzlegrid.cell_height):  
-    #    draw.line((min_x, y, max_x, y), fill = 128)
-    #for x in range(min_x, 0, -puzzlegrid.cell_width):
-    #    draw.line((x, min_y, x, max_y), fill = 128)
+    THRES_LOW = 2000 #??
+    THRES_HIGH = 10000
     
     # top
     top = []
@@ -69,8 +65,9 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
             variance /= (puzzlegrid.cell_width * puzzlegrid.cell_height)
             
             # has number, save cell top-left corner in positions
-            if variance > THRES:
+            if variance > THRES_LOW and variance < THRES_HIGH:
                 x_list.append((x, y))
+                positions.append((x, y))
             else:
                 break
         top.append(x_list)
@@ -102,8 +99,9 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
             variance /= (puzzlegrid.cell_width * puzzlegrid.cell_height)
             
             # has number, save cell top-left corner in positions
-            if variance > THRES:
+            if variance > THRES_LOW and variance < THRES_HIGH:
                 y_list.append((x, y))
+                positions.append((x, y))
             else:
                 break
         side.append(y_list)
