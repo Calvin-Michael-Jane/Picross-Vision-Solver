@@ -13,6 +13,7 @@ def ocr(num_pos, picture):
     pr = Representations.PuzzleRep(top, side) # consists of side and top 2D arrays
     return pr # puzzle representation
 
+# i write neural network now l0l
 
 # testing main
 if __name__=='__main__':
