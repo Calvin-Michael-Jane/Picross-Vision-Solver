@@ -8,7 +8,7 @@ import ImageShow
 import ImageDraw
 import math
 
-DRAW = False
+DRAW = True
 
 def fix_skew(pic_name, picture):
     accumulator = {} # (theta, rho): num_votes

@@ -91,8 +91,8 @@ def detect_lines(picture, name):
     
 
     # return a Grid Representation of this solution
-    cell_width = projected_avg_x
-    cell_height = projected_avg_y
+    cell_width = max(1, projected_avg_x)
+    cell_height = max(1, projected_avg_y)
     gr = Representations.GridRep(grid_coords, ycoords, xcoords, cell_height, cell_width)
     return gr
 
@@ -117,6 +117,8 @@ def vote_avg_diff(coords):
                 if (x+diff) not in votes : votes[x+diff]=0
                 votes[x+diff]+=1
         prev_coord = coord
+    if not votes:
+        return 0
     return max(votes)
 
 def get_avg_diff(coords):
