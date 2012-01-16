@@ -4,7 +4,7 @@
 # May return a constant picture or a web camera image
 import Image, ImageDraw
 import ImageFilter
-import ImageOps
+import ImageOps, ImageShow
 #import heapq
 import Representations
 import prewitt
@@ -85,12 +85,13 @@ def detect_lines(picture, name):
     draw.rectangle(grid_coords,outline=128)
     del draw
     combined.save("./images/painted_lines_both_"+name+".jpg")
+    ImageShow.show(combined,"blah")
     
 
     # return a Grid Representation of this solution
-    cell_length = projected_avg_x
+    cell_width = projected_avg_x
     cell_height = projected_avg_y
-    gr = Representations.GridRep(grid_coords, cell_length, cell_height)
+    gr = Representations.GridRep(grid_coords, ycoords, xcoords, cell_height, cell_width)
     return gr
 
 def extrapolate_coords(start, avg):

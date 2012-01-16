@@ -73,6 +73,8 @@ def fix_skew(picture):
     picture = Image.composite(picture, white, picture)
     width, height = picture.size
     
+    ImageShow.show(picture, 'anti-skewed')
+    
     return picture # picture
 
 
