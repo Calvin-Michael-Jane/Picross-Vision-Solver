@@ -36,7 +36,7 @@ class DataSet:
                 line = line.strip()
                 words = line.split(' ')
                 for j in range(len(words)-1):
-                    ex.append(int(words[j]))
+                    ex.append(float(words[j]))
                 self.trainlabel[i] = int(words[-1])
                 trainex.append(ex)
                 i += 1

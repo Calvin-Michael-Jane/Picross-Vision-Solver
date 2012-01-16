@@ -14,6 +14,8 @@ def solve(puzzle):
     top = puzzle.top
     puzzle = to_notation(puzzle);
     two_d_boolean_array = [[0] * len(top)] * len(side);
+    two_d_boolean_array[3][4] = 1
+    two_d_boolean_array[2][1] = 1
     solution = Representations.SolutionRep(two_d_boolean_array)
     return solution # puzzle solution representation
     
