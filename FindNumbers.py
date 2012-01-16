@@ -6,13 +6,12 @@ import Image
 import DetectGrid
 import ImageShow
 import ImageDraw
+import Representations
 
 TRAIN = False # produces images for training if true
 DRAW = False
 
 def find_numbers(puzzlegrid, skewless_picture, pic_name):
-    positions = [];
-    
     width, height = skewless_picture.size
     print "image size: ", width, height
     
@@ -40,10 +39,12 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
     #    draw.line((x, min_y, x, max_y), fill = 128)
     
     # top
+    top = []
     for x in puzzlegrid.x_coords:
         if x == max_x:
             continue
-            
+        
+        x_list = []
         for y in range(min_y - puzzlegrid.cell_height, 0, -puzzlegrid.cell_height):  
             # calculate average
             average = 0
@@ -65,14 +66,18 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
             
             # has number, save cell top-left corner in positions
             if variance > THRES:
-                positions.append((x, y))
+                x_list.append((x, y))
             else:
                 break
+        top.append(x_list)
+        
     # left
+    side = []
     for y in puzzlegrid.y_coords:
         if y == max_y:
             continue
-            
+         
+        y_list = []
         for x in range(min_x - puzzlegrid.cell_width, 0, -puzzlegrid.cell_width):
             # calculate average
             average = 0
@@ -94,9 +99,10 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
             
             # has number, save cell top-left corner in positions
             if variance > THRES:
-                positions.append((x, y))
+                y_list.append((x, y))
             else:
                 break
+        side.append(y_list)
                 
     if DRAW:
         draw = ImageDraw.Draw(skewless_picture)
@@ -116,7 +122,13 @@ def find_numbers(puzzlegrid, skewless_picture, pic_name):
             picture = skewless_picture.crop([ptx, pty, ptx + puzzlegrid.cell_width, pty + puzzlegrid.cell_height]);
             picture.save("./images/train/{0}_{1}_{2}.jpg".format(pic_name, ptx, pty))
 
-    return positions # number positions
+    digits = Representations.DigitsRep(top, side)
+    print "top"
+    print digits.top
+    print "side"
+    print digits.side
+    
+    return digits # digits representation
 
 
 # testing main
