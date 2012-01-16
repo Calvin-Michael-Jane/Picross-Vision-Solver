@@ -6,15 +6,7 @@ import Image
 import ImageShow
 
 #test_pic = './testpicture.jpg'
-<<<<<<< HEAD
-<<<<<<< HEAD
 test_pic = './images/webcam.jpg'
-=======
-test_pic = './images/blue_9.jpg'
->>>>>>> 00af2da0ba32f069db6b9bff472f7a46ae56466c
-=======
-test_pic = './images/blue_9.jpg'
->>>>>>> 00af2da0ba32f069db6b9bff472f7a46ae56466c
 
 def picture():
     image = Image.open(test_pic)
