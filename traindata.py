@@ -25,4 +25,7 @@ with open('data/ocr.train', 'w') as f:
     
         # add real value
         #trainex.append(filename[-5])
-        f.write('%d\n' % int(filename[-5]))
+        if filename[-6] != '_':
+            f.write('10\n')
+        else:
+            f.write('%d\n' % int(filename[-5]))
