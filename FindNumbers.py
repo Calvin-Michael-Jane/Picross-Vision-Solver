@@ -7,8 +7,8 @@ import DetectGrid
 import ImageShow
 import ImageDraw
 
-TRAIN = True # produces images for training if true
-DRAW = False
+TRAIN = False # produces images for training if true
+DRAW = True
 
 def find_numbers(puzzlegrid, skewless_picture, pic_name):
     positions = [];
