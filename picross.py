@@ -8,9 +8,9 @@ import GetPicture
 import AntiSkew
 import DetectGrid
 import FindNumbers
-#import OCRNumbers
-#import PicrossSolver
-#import DisplayPuzzle
+import OCRNumbers
+import PicrossSolver
+import DisplayPuzzle
 
 pic_name = 'blue'
 test_pic = './images/' + pic_name + '.jpg'

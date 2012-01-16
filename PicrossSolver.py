@@ -13,9 +13,9 @@ def solve(puzzle):
     side = puzzle.side
     top = puzzle.top
     puzzle = to_notation(puzzle);
-    two_d_boolean_array = [[None] * len(top)] * len(side);
-    # solution = Representations.SolutionRep(two_d_boolean_array)
-    return two_d_boolean_array # puzzle solution representation
+    two_d_boolean_array = [[0] * len(top)] * len(side);
+    solution = Representations.SolutionRep(two_d_boolean_array)
+    return solution # puzzle solution representation
     
 def to_notation(puzzle):
     top = []
@@ -47,26 +47,26 @@ def to_notation(puzzle):
     return puzzle
 
 
-
-#     The boolean function Fix (s, d) is true if and only if s is ﬁxable with respect to d.    
+   
+#   The boolean function Fix(s, d) is true iff s is fixable with respect to d.
 def fix(i, j, s, d):
-    A_jprev = 
-    B_jprev = 
-    if i == 0 and A_j == 0
+    A_jprev = 0 ###########
+    B_jprev = 0 ########### 
+    if i == 0 and A_j == 0:
         return true
-    if j == 0
+    if j == 0:
         return false
-    if i < A_j or i > B_j
+    if i < A_j or i > B_j:
         return false
     # let L_sig_i(s) denote the largest index h < i such that s_h != sig and s_h != x, or 0.
     min(i-a_j, B_jprev)
     p = max(i-b_j, A_jprev, L)
     fix(p, j-1, s, d)
 
-#   The Settle operation produces, given a string s over Γ and a description d, the 
-#   string where all string elements that have the same value in every ﬁx are set    
+#   The Settle operation produces, given a string s over T and a description d, the 
+#   string where all string elements that have the same value in every fix are set    
 def settle():  
-
+    hi = 0
 
 # testing main
 if __name__=='__main__':
