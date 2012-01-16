@@ -7,34 +7,51 @@ import NeuralNetwork
 puzzle_size = 5
 
 def ocr(num_pos, picture, puzzlegrid):
+    
+    top = []
+    side = []
+    
     # set up neural network
     net = NeuralNetwork.NeuralNetwork('data/ocr.train', 100)
     
     # predict each number
-    for x in num_pos:
-        digit_image = picture.crop([int(x[0]), int(x[1]), int(x[0]) + puzzlegrid.cell_width, int(x[1]) + puzzlegrid.cell_height]) 
-        digit_image = digit_image.convert("L")
-        digit_image = digit_image.resize([14, 14])
-        digit_pixels = digit_image.load()
-        width, height = digit_image.size
-        
-        # clamp values to 0, 255
-        testsample = []
-        for x in range(width):
-            for y in range(height):
-                if digit_pixels[x, y] < 127:
-                    digit_pixels[x, y] = 0
-                else:
-                    digit_pixels[x, y] = 255;
-                testsample.append(float(digit_pixels[x, y])/255.0)
-        digit = net.predict(testsample)
-        print digit
-        digit_image.show(str(digit))
-        
-    top = [[0]*puzzle_size for x in xrange(puzzle_size)] #2D array
-    side = [[0]*puzzle_size for x in xrange(puzzle_size)]
+    for a in num_pos.top:
+        pred = []
+        for x in a:
+            prediction = ocr_digit(x, picture, puzzlegrid, net)
+            pred.append(prediction)
+        top.append(pred)
+    
+    for a in num_pos.side:
+           pred = []
+           for x in a:
+               prediction = ocr_digit(x, picture, puzzlegrid, net)
+               pred.append(prediction)
+           side.append(pred)
+    
+    print top
+    print side
+    
     pr = Representations.PuzzleRep(top, side) # consists of side and top 2D arrays
     return pr # puzzle representation
+
+def ocr_digit(coordinate, picture, puzzlegrid, net):
+    digit_image = picture.crop([int(coordinate[0]), int(coordinate[1]), int(coordinate[0]) + puzzlegrid.cell_width, int(coordinate[1]) + puzzlegrid.cell_height]) 
+    digit_image = digit_image.convert("L")
+    digit_image = digit_image.resize([14, 14])
+    digit_pixels = digit_image.load()
+    width, height = digit_image.size
+    
+    # clamp values to 0, 255
+    testsample = []
+    for x in range(width):
+        for y in range(height):
+            if digit_pixels[x, y] < 127:
+                digit_pixels[x, y] = 0
+            else:
+                digit_pixels[x, y] = 255;
+            testsample.append(float(digit_pixels[x, y])/255.0)
+    return net.predict(testsample)
 
 # i write neural network now l0l
 
