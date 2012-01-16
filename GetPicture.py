@@ -15,7 +15,7 @@ def picture(pic_name, test_pic):
     image = Image.open(test_pic)
     
     # flip along vertical axis
-    image = image.transpose(Image.FLIP_LEFT_RIGHT)
+    #image = image.transpose(Image.FLIP_LEFT_RIGHT)
     
     # preprocess: trim to game screen
     image = image.convert('L')
