@@ -8,9 +8,9 @@ import ImageDraw
 import prewitt
 
 #test_pic = './testpicture.jpg'
-test_pic = './images/webcam.jpg'
+#test_pic = './images/webcam.jpg'
 
-def picture():
+def picture(test_pic):
     image = Image.open(test_pic)
     
     # flip along vertical axis

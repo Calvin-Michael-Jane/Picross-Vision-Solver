@@ -11,6 +11,7 @@ import prewitt
 from math import floor
 
 global_board_size = 10
+DRAW = False
 
 def detect(picture):
     grid = [(4,4),(10,4),(10,10),(4,10)] # grid corners
@@ -81,11 +82,12 @@ def detect_lines(picture, name):
     print "grid_coords:"
     print grid_coords
 
-    draw = ImageDraw.Draw(combined)
-    draw.rectangle(grid_coords,outline=128)
-    del draw
-    combined.save("./images/painted_lines_both_"+name+".jpg")
-    ImageShow.show(combined,"blah")
+    if DRAW:
+        draw = ImageDraw.Draw(combined)
+        draw.rectangle(grid_coords,outline=128)
+        del draw
+        combined.save("./images/painted_lines_both_"+name+".jpg")
+        ImageShow.show(combined,"blah")
     
 
     # return a Grid Representation of this solution
