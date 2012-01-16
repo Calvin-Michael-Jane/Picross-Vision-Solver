@@ -22,7 +22,7 @@ if __name__=='__main__':
     skewless_picture = AntiSkew.fix_skew(original_picture)
     puzzlegrid = DetectGrid.detect_lines(skewless_picture,"test")
     number_positions = FindNumbers.find_numbers(puzzlegrid, skewless_picture, pic_name)
-    puzzle = OCRNumbers.ocr(number_positions, skewless_picture)
+    puzzle = OCRNumbers.ocr(number_positions, skewless_picture, puzzlegrid)
     solution = PicrossSolver.solve(puzzle)
     DisplayPuzzle.visualize(solution)
 

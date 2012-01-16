@@ -8,7 +8,7 @@ import ImageShow
 import ImageDraw
 
 TRAIN = False # produces images for training if true
-DRAW = True
+DRAW = False
 
 def find_numbers(puzzlegrid, skewless_picture, pic_name):
     positions = [];
