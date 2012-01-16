@@ -38,19 +38,16 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/local/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /opt/local/bin/cmake -E remove -f
-
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /opt/local/bin/ccmake
+RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/MAB/Downloads/testopencv/webcam
+CMAKE_SOURCE_DIR = /home/michael/429/testopencv/webcam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/MAB/Downloads/testopencv/webcam
+CMAKE_BINARY_DIR = /home/michael/429/testopencv/webcam
 
 #=============================================================================
 # Target rules for target CMakeFiles/webcam.dir
@@ -59,7 +56,7 @@ CMAKE_BINARY_DIR = /Users/MAB/Downloads/testopencv/webcam
 CMakeFiles/webcam.dir/all:
 	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/depend
 	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /Users/MAB/Downloads/testopencv/webcam/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/michael/429/testopencv/webcam/CMakeFiles 
 	@echo "Built target webcam"
 .PHONY : CMakeFiles/webcam.dir/all
 
@@ -69,9 +66,9 @@ all: CMakeFiles/webcam.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/webcam.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/MAB/Downloads/testopencv/webcam/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michael/429/testopencv/webcam/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/webcam.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/MAB/Downloads/testopencv/webcam/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michael/429/testopencv/webcam/CMakeFiles 0
 .PHONY : CMakeFiles/webcam.dir/rule
 
 # Convenience name for target.

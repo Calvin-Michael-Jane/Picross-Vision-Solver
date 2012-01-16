@@ -1,0 +1,2 @@
+g++ webcam.c -o webcam2 -I /usr/include/opencv -L /usr/local/lib -lm -lcv -lhighgui
+

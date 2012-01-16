@@ -30,27 +30,24 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/local/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /opt/local/bin/cmake -E remove -f
-
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /opt/local/bin/ccmake
+RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/MAB/Downloads/testopencv/webcam
+CMAKE_SOURCE_DIR = /home/michael/429/testopencv/webcam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/MAB/Downloads/testopencv/webcam
+CMAKE_BINARY_DIR = /home/michael/429/testopencv/webcam
 
 #=============================================================================
 # Targets provided globally by CMake.
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/opt/local/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running interactive CMake command-line interface..."
+	/usr/bin/cmake -i .
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -60,7 +57,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/local/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -69,9 +66,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/MAB/Downloads/testopencv/webcam/CMakeFiles /Users/MAB/Downloads/testopencv/webcam/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michael/429/testopencv/webcam/CMakeFiles /home/michael/429/testopencv/webcam/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/MAB/Downloads/testopencv/webcam/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michael/429/testopencv/webcam/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,21 +108,6 @@ webcam/fast:
 	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/build
 .PHONY : webcam/fast
 
-# target to build an object file
-webcam.o:
-	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/webcam.o
-.PHONY : webcam.o
-
-# target to preprocess a source file
-webcam.i:
-	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/webcam.i
-.PHONY : webcam.i
-
-# target to generate assembly for a file
-webcam.s:
-	$(MAKE) -f CMakeFiles/webcam.dir/build.make CMakeFiles/webcam.dir/webcam.s
-.PHONY : webcam.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -135,9 +117,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... webcam"
-	@echo "... webcam.o"
-	@echo "... webcam.i"
-	@echo "... webcam.s"
 .PHONY : help
 
 
