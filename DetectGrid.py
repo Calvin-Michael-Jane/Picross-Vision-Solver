@@ -49,10 +49,10 @@ def detect_lines(picture, name):
     avg_x = vote_avg_diff(xcoords)
     avg_y = vote_avg_diff(ycoords)
     #avg = (avg_x+avg_y)/2
-    print "avg x diff: {}".format(projected_avg_x)
-    print "avg y diff: {}".format(projected_avg_y)
-    print "voted x df: {}".format(avg_x)
-    print "voted y df: {}".format(avg_y)
+    print "avg x diff: ", projected_avg_x
+    print "avg y diff: ", projected_avg_y
+    print "voted x df: ", avg_x
+    print "voted y df: ", avg_y
 
 
     # get an evenly spaced set of lines
@@ -196,9 +196,10 @@ def detect_hv_lines(filtered,direction):
 
     num_removed = 1
     while num_removed > 0:
-        print "coords: {}".format(coords)
+        print "coords: ", coords
         (coords,num_removed) = clean_lines(coords)
-        print "num removed: {}".format(num_removed)
+        print "num removed: ", num_removed
+        
     return (saved_coords,coords)
 
 
@@ -213,7 +214,7 @@ def clean_lines(coords):
     cleaned_coords = []
     for coord in coords:
         space = coord - prev_coord
-        print "spaces: {}".format(space)
+        print "spaces: ", space
         if space >= min_space:
             cleaned_coords.append(prev_coord)
         prev_coord = coord
@@ -232,7 +233,7 @@ def clean_lines(coords):
     avg_diff = get_avg_diff(cleaned_coords)
     max_tolerated = avg_diff * 2
     min_tolerated = avg_diff * 0.3
-    print 'avg_diff: {}'.format(avg_diff)
+    print 'avg_diff: ', avg_diff
     
     num_removed = 0
     prev_coord = -1
@@ -248,7 +249,7 @@ def clean_lines(coords):
             cleaned_coords.remove(prev_coord)
             avg_point = floor((diff / 2) + prev_coord)
             cleaned_coords.insert(0,avg_point)
-            print "avg point: {} added".format(avg_point)
+            print "avg point: ", avg_point, " added"
             num_removed+=1
         prev_coord = coord
 
@@ -261,7 +262,7 @@ def paint_lines(picture, coords, direction):
     outpixels = outimg.load()
     v="vertical"
     h="horizontal"
-    print "current coords: {}".format(coords)
+    print "current coords: ", coords
     for coord in coords:
         if direction==v:
             max_line = height
@@ -273,7 +274,7 @@ def paint_lines(picture, coords, direction):
             elif direction==h:
                 #print "fail i: {0}\tfail coord: {1}".format(i, coord)
                 outpixels[i,coord] = 255
-    print 'coords: {}'.format(coords)
+    print "coords: ", coords
     return Image.blend(ImageOps.invert(outimg).convert("RGB"),picture.convert("RGB"),0.2)
 
 
