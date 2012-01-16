@@ -20,12 +20,13 @@ def visualize(solution):
                 for j in range(SIDE_LENGTH):
                     curr_x = x * SIDE_LENGTH + i 
                     curr_y = y * SIDE_LENGTH + j
-                    if solution.solution[x][y] == 0:
+                    if solution.solution[y][x] == 0:
                         pixels[curr_x, curr_y] = 255
                     else:
                         pixels[curr_x, curr_y] = 0
     
     ImageShow.show(image, 'solution')
+    image.save('fakesolution.jpg')
     
 
 
@@ -33,7 +34,8 @@ def visualize(solution):
 if __name__=='__main__':
     test_pic = './images/testpicture.jpg'
     image = Image.open(test_pic)
-    answer = [[0]*puzzle_size for x in xrange(puzzle_size)]
+    answer = [[0, 1, 0, 0, 0, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 0], [0, 1, 1, 1, 0, 0, 0, 1], [0, 0, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1], [1, 1, 1, 0, 1, 1, 0, 0]]
+    #[[0]*puzzle_size for x in xrange(puzzle_size)]
     solution = Representations.SolutionRep(answer)
     visualize(solution)
 
