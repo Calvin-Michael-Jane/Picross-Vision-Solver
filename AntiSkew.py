@@ -81,7 +81,7 @@ def fix_skew(picture):
 
 # testing main
 if __name__=='__main__':
-    test_pic = './images/blue_9.jpg'
+    test_pic = './images/blue_9_crop.jpg'
     image = Image.open(test_pic)
     fixed = fix_skew(image)
     ImageShow.show(fixed, 'skew removed')

@@ -6,10 +6,14 @@ import Image
 import ImageShow
 
 #test_pic = './testpicture.jpg'
-test_pic = './blue_9.jpg'
+test_pic = './images/webcam.jpg'
 
 def picture():
     image = Image.open(test_pic)
+    
+    # flip along vertical axis
+    image = image.transpose(Image.FLIP_LEFT_RIGHT)
+    
     return image # picture
 
 
