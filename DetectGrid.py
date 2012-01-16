@@ -4,13 +4,14 @@
 # May return a constant picture or a web camera image
 import Image, ImageDraw
 import ImageFilter
-import ImageOps
+import ImageOps, ImageShow
 #import heapq
 import Representations
 import prewitt
 from math import floor
 
 global_board_size = 10
+DRAW = True
 
 def detect(picture):
     grid = [(4,4),(10,4),(10,10),(4,10)] # grid corners
@@ -81,16 +82,18 @@ def detect_lines(picture, name):
     print "grid_coords:"
     print grid_coords
 
-    draw = ImageDraw.Draw(combined)
-    draw.rectangle(grid_coords,outline=128)
-    del draw
-    combined.save("./images/painted_lines_both_"+name+".jpg")
+    if DRAW:
+        draw = ImageDraw.Draw(combined)
+        draw.rectangle(grid_coords,outline=128)
+        del draw
+        combined.save("./images/painted_lines_both_"+name+".jpg")
+        ImageShow.show(combined,"blah")
     
 
     # return a Grid Representation of this solution
-    cell_length = projected_avg_x
+    cell_width = projected_avg_x
     cell_height = projected_avg_y
-    gr = Representations.GridRep(grid_coords, cell_length, cell_height)
+    gr = Representations.GridRep(grid_coords, ycoords, xcoords, cell_height, cell_width)
     return gr
 
 def extrapolate_coords(start, avg):

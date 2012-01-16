@@ -8,6 +8,8 @@ import ImageShow
 import ImageDraw
 import math
 
+DRAW = True
+
 def fix_skew(picture):
     accumulator = {} # (theta, rho): num_votes
     found_points = {}
@@ -52,17 +54,18 @@ def fix_skew(picture):
     
     # draw points associated with max key
     # find min y value to crop
-    draw = ImageDraw.Draw(picture)
-    BOXSIZE = 3
-    min_y = 0
-    for point in found_points[max_key]:
-        ptx = point[0]
-        pty = point[1]
-        if (pty > min_y):
-            min_y = pty   
-        draw.rectangle([ptx-BOXSIZE, pty-BOXSIZE, ptx+BOXSIZE, pty+BOXSIZE], fill=128)
-    del draw
-    ImageShow.show(picture, 'with points')
+    if DRAW:
+        draw = ImageDraw.Draw(picture)
+        BOXSIZE = 3
+        min_y = 0
+        for point in found_points[max_key]:
+            ptx = point[0]
+            pty = point[1]
+            if (pty > min_y):
+                min_y = pty   
+            draw.rectangle([ptx-BOXSIZE, pty-BOXSIZE, ptx+BOXSIZE, pty+BOXSIZE], fill=128)
+        del draw
+        ImageShow.show(picture, 'with points')
     
     # perform rotation & composite to make bkg white
     # source: http://stackoverflow.com/questions/5252170/
@@ -72,6 +75,8 @@ def fix_skew(picture):
     white = Image.new('RGBA', picture.size, (255,)*4)
     picture = Image.composite(picture, white, picture)
     width, height = picture.size
+    
+    ImageShow.show(picture, 'anti-skewed')
     
     return picture # picture
 

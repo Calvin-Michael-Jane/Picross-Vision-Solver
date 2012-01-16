@@ -11,9 +11,12 @@ class PuzzleRep:
 # A GridRep.grid is an array of coordinates of the image grid corners.
 # GridRep.cell_length is the length of the grid squares.
 class GridRep:
-    def __init__(self, grid, cell_length):
+    def __init__(self, grid, x_coords, y_coords, cell_width, cell_height):
         self.grid = grid
-        self.cell_length = cell_length
+        self.x_coords = x_coords
+        self.y_coords = y_coords
+        self.cell_width = cell_width
+        self.cell_height = cell_height
 
 # A SolutionRep.solution is a 2D boolean array representing
 # which boxes within the puzzle should be filled in.
