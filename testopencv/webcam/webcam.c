@@ -41,6 +41,9 @@ int main( int argc, char **argv )
         /* exit if user press 'q' */
         key = cvWaitKey( 1 );
     }
+    
+    /* write current frame out to file */
+    cvSaveImage("testwebshot.jpg" ,frame);
 
     /* free memory */
     cvDestroyWindow( "result" );
