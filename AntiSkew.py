@@ -20,7 +20,7 @@ def fix_skew(picture):
     # traverse pixels in image to vote
     width, height = picture.size
     
-    THRES_BLACK = 20
+    THRES_BLACK = 30
     
     for x in range(width):
         for y in range(height):
@@ -29,9 +29,7 @@ def fix_skew(picture):
                 # 180 lines through (x, y), vote
                 THETA_RANGE = 10
                 for theta in range(-1 * THETA_RANGE, THETA_RANGE):
-                    rho = math.floor(x * math.cos(theta) + y * math.sin(theta))
-                    if rho < 0: 
-                        continue
+                    rho = round(x * math.cos(theta) + y * math.sin(theta))
                     ac_key = (theta, rho)
                     if ac_key not in accumulator:
                         accumulator[ac_key] = 1
@@ -42,24 +40,26 @@ def fix_skew(picture):
     
     # find (theta, rho) with most votes
     max_votes = 0
-    max_key = 0 #(0,0)
+    max_key = (0,0)
     
     for key in accumulator:
         if accumulator[key] > max_votes:
             max_votes = accumulator[key] # num_votes
             max_key = key
-        if accumulator[key] > 10:
-            print 'key: {0} {1}'.format(key, accumulator[key])
     
-    print max_votes
-    print max_key
+    #print "votes: {}".format(max_votes)
+    print "key: {}".format(max_key)
     
     # draw points associated with max key
+    # find min y value to crop
     draw = ImageDraw.Draw(picture)
     BOXSIZE = 3
+    min_y = 0
     for point in found_points[max_key]:
         ptx = point[0]
         pty = point[1]
+        if (pty > min_y):
+            min_y = pty   
         draw.rectangle([ptx-BOXSIZE, pty-BOXSIZE, ptx+BOXSIZE, pty+BOXSIZE], fill=128)
     del draw
     ImageShow.show(picture, 'with points')
@@ -71,13 +71,17 @@ def fix_skew(picture):
     picture = picture.rotate(max_key[0], expand=True)
     white = Image.new('RGBA', picture.size, (255,)*4)
     picture = Image.composite(picture, white, picture)
+    width, height = picture.size
+    
+    Y_BUFFER = 10
+    picture = picture.crop([0, min_y + Y_BUFFER, width, height]);
     
     return picture # picture
 
 
 # testing main
 if __name__=='__main__':
-    test_pic = './blue_9.jpg'
+    test_pic = './images/blue_9.jpg'
     image = Image.open(test_pic)
     fixed = fix_skew(image)
     ImageShow.show(fixed, 'skew removed')
