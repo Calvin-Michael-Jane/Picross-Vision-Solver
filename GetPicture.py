@@ -6,7 +6,7 @@ import Image
 import ImageShow
 
 #test_pic = './testpicture.jpg'
-test_pic = './images/webcam.jpg'
+test_pic = './images/blue_9.jpg'
 
 def picture():
     image = Image.open(test_pic)

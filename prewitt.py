@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# most of this code was adapted from
+# http://archive.alwaysmovefast.com/basic-edge-detection-in-python.html
+
 
 import Image 
 import sys 
