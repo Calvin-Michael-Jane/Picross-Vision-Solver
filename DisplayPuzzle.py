@@ -13,7 +13,7 @@ def visualize(solution):
 
 # testing main
 if __name__=='__main__':
-    test_pic = './testpicture.jpg'
+    test_pic = './images/testpicture.jpg'
     image = Image.open(test_pic)
     answer = [[0]*puzzle_size for x in xrange(puzzle_size)]
     solution = Representations.SolutionRep(answer)
