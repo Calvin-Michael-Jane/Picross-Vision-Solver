@@ -7,6 +7,11 @@ class PuzzleRep:
         self.top = top
         self.side = side
         
+class DigitsRep:
+    def __init__(self, top, side):
+        self.top = top
+        self.side = side
+        
 # Represents dimensions of grid determined by DetectGrid.
 # A GridRep.grid is an array of coordinates of the image grid corners.
 # GridRep.cell_length is the length of the grid squares.
