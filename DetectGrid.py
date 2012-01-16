@@ -40,16 +40,21 @@ def detect_lines(picture, name):
     projected_avg_x = (max_x-min_x)/global_board_size
     projected_avg_y = (max_y-min_y)/global_board_size
 
-    #avg_x = vote_avg_diff(xcoords)
-    #avg_y = vote_avg_diff(ycoords)
+    avg_x = vote_avg_diff(xcoords)
+    avg_y = vote_avg_diff(ycoords)
     #avg = (avg_x+avg_y)/2
     print "avg x diff: {}".format(projected_avg_x)
     print "avg y diff: {}".format(projected_avg_y)
+    print "voted x df: {}".format(avg_x)
+    print "voted y df: {}".format(avg_y)
 
 
     # get an evenly spaced set of lines
     #xcoords = extrapolate_coords(max_x, projected_avg_x)
     #ycoords = extrapolate_coords(max_y, projected_avg_y)
+    #xcoords = extrapolate_coords(max_x, avg_x)
+    #ycoords = extrapolate_coords(max_y, avg_y)
+
 
     paintedh = paint_lines(hor_filt, xcoords,h)
     paintedh.save("./images/painted_lines_hor_"+name+".jpg")
@@ -80,6 +85,8 @@ def detect_lines(picture, name):
 def extrapolate_coords(start, avg):
     new_coords = []
     for i in xrange(global_board_size+1):
+        new_val = floor(start-(i*avg))
+        if new_val < 0 : continue
         new_coords.append(floor(start-(i*avg)))
     return new_coords
 
@@ -167,13 +174,16 @@ def detect_hv_lines(filtered,direction):
     # only lines that have a length at least 20% of the
     # longest line
     max_val = max(vert_counts.values())
-    threshold = 0.2 * max_val
+    threshold = 0.15 * max_val
     
     coords = []
     for key, value in vert_counts.iteritems():
         if value > threshold:
             coords.append(key)
-    coords = clean_lines(coords)
+    num_removed = 1
+    while num_removed > 0:
+        (coords,num_removed) = clean_lines(coords)
+        print "num removed: {}".format(num_removed)
     return coords
 
 
@@ -202,6 +212,7 @@ def clean_lines(coords):
     min_tolerated = avg_diff * 0.3
     print 'avg_diff: {}'.format(avg_diff)
     
+    num_removed = 0
     prev_coord = -1
     for coord in cleaned_coords:
         diff = coord - prev_coord
@@ -209,9 +220,10 @@ def clean_lines(coords):
         if (prev_coord >= 0) and ((diff > max_tolerated) or (diff < min_tolerated)):
             print "{0}--diff removed; {1}--coord removed".format(diff,prev_coord)
             cleaned_coords.remove(prev_coord)
+            num_removed+=1
         prev_coord = coord
 
-    return cleaned_coords
+    return (cleaned_coords,num_removed)
 
 # visualize the resulting lines on the image post filter
 def paint_lines(picture, coords, direction):

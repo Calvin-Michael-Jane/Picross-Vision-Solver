@@ -117,7 +117,7 @@ def find_numbers(puzzlegrid, skewless_picture):
 
 # testing main
 if __name__=='__main__':
-    test_pic = './blue_9.jpg'
+    test_pic = './images/blue_9.jpg'
     image = Image.open(test_pic)
     puzzlegrid = DetectGrid.detect(image)
     nums = find_numbers(puzzlegrid, image)

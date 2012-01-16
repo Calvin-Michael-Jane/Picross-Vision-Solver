@@ -16,7 +16,7 @@ def ocr(num_pos, picture):
 
 # testing main
 if __name__=='__main__':
-    test_pic = './testpicture.jpg'
+    test_pic = './images/testpicture.jpg'
     image = Image.open(test_pic)
     number_positions = [(0,0), (1,1)]
     puzzle = ocr(number_positions, image)

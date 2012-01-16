@@ -16,7 +16,7 @@ def solve(puzzle):
 
 # testing main
 if __name__=='__main__':
-    test_pic = './testpicture.jpg'
+    test_pic = './images/testpicture.jpg'
     image = Image.open(test_pic)
     top = [[0,0],[0,0]]
     side = [[1,1],[1,1]]
