@@ -25,10 +25,16 @@ def detect_lines(picture, name):
     width, height = picture.size
     (both, hor_filt, vert_filt) = prewitt.prewitt(pixels, width, height)
     
+    picture.save("./images/original.jpg")
+
     v = "vertical"
     h = "horizontal"
-    xcoords = detect_hv_lines(hor_filt,h)
-    ycoords = detect_hv_lines(vert_filt,v)
+    (saved, xcoords) = detect_hv_lines(hor_filt,h)
+    (savedy, ycoords) = detect_hv_lines(vert_filt,v)
+
+    paint_lines(hor_filt,saved,h).save("./images/saveda.jpg")
+    paint_lines(vert_filt,savedy,v).save("./images/savedv.jpg")
+
 
     # we'll trust the max coordinates as those are near the edge of the image
     # and are unlikely to be mistaken compared to the min coordinates
@@ -50,13 +56,13 @@ def detect_lines(picture, name):
 
 
     # get an evenly spaced set of lines
-    #xcoords = extrapolate_coords(max_x, projected_avg_x)
-    #ycoords = extrapolate_coords(max_y, projected_avg_y)
+    xcoords = extrapolate_coords(max_x, projected_avg_x)
+    ycoords = extrapolate_coords(max_y, projected_avg_y)
     #xcoords = extrapolate_coords(max_x, avg_x)
     #ycoords = extrapolate_coords(max_y, avg_y)
 
 
-    paintedh = paint_lines(hor_filt, xcoords,h)
+    paintedh = paint_lines(hor_filt,xcoords,h)
     paintedh.save("./images/painted_lines_hor_"+name+".jpg")
 
     paintedv = paint_lines(vert_filt, ycoords,v)
@@ -79,8 +85,13 @@ def detect_lines(picture, name):
     draw.rectangle(grid_coords,outline=128)
     del draw
     combined.save("./images/painted_lines_both_"+name+".jpg")
+    
 
-    return (xcoords,ycoords)
+    # return a Grid Representation of this solution
+    cell_length = projected_avg_x
+    cell_height = projected_avg_y
+    gr = Representations.GridRep(grid_coords, cell_length, cell_height)
+    return gr
 
 def extrapolate_coords(start, avg):
     new_coords = []
@@ -127,7 +138,7 @@ def detect_hv_lines(filtered,direction):
     # from a vertical pass where the horizontal bar hits a black
     # spot
     num_passes = 20
-    threshold = 120
+    threshold = 130
     window_size = 15
     width,height = filtered.size
     vert_counts = {}
@@ -157,7 +168,7 @@ def detect_hv_lines(filtered,direction):
                 longest_line = width-window_size
             if (pic_val < threshold and (not (i in vert_counts))):
                 count = 0
-                for line_i in xrange(longest_line):
+                for line_i in range(0,longest_line,window_size):
                     window_val = 0
                     for win_i in xrange(window_size):
                         if direction==v:
@@ -174,32 +185,44 @@ def detect_hv_lines(filtered,direction):
     # only lines that have a length at least 20% of the
     # longest line
     max_val = max(vert_counts.values())
-    threshold = 0.15 * max_val
+    threshold = 0.2 * max_val
     
     coords = []
     for key, value in vert_counts.iteritems():
         if value > threshold:
             coords.append(key)
+
+    saved_coords = list(coords)
+
     num_removed = 1
     while num_removed > 0:
+        print "coords: {}".format(coords)
         (coords,num_removed) = clean_lines(coords)
         print "num removed: ", num_removed
-    return coords
+        
+    return (saved_coords,coords)
 
 
 # get rid of multiple lines corresponding to the same position
 # and remove lines that do not seem to be at the equal spacing
 # found within the actual grid
 def clean_lines(coords):
-    min_space = 8
+    min_space = 4
 
     coords.sort()
     prev_coord = coords[0]
     cleaned_coords = []
     for coord in coords:
-        if not (prev_coord>=(coord-min_space)):
+        space = coord - prev_coord
+        print "spaces: {}".format(space)
+        if space >= min_space:
             cleaned_coords.append(prev_coord)
         prev_coord = coord
+
+    # finish the cleaning of nothing is left to be done
+    if not cleaned_coords:
+        return (coords,0)
+
     # take care of final case
     if prev_coord > (max(cleaned_coords)+min_space):
         cleaned_coords.append(prev_coord)
@@ -217,9 +240,16 @@ def clean_lines(coords):
     for coord in cleaned_coords:
         diff = coord - prev_coord
         print '{0} to {1} has diff: {2}'.format(prev_coord,coord,diff)
-        if (prev_coord >= 0) and ((diff > max_tolerated) or (diff < min_tolerated)):
+        if (prev_coord >= 0) and (diff > max_tolerated):
             print "{0}--diff removed; {1}--coord removed".format(diff,prev_coord)
             cleaned_coords.remove(prev_coord)
+            num_removed+=1
+        elif (prev_coord >=0) and (diff < min_tolerated):
+            print "{0}--diff split; {1}--coord removed".format(diff,prev_coord)
+            cleaned_coords.remove(prev_coord)
+            avg_point = floor((diff / 2) + prev_coord)
+            cleaned_coords.insert(0,avg_point)
+            print "avg point: {} added".format(avg_point)
             num_removed+=1
         prev_coord = coord
 
@@ -250,16 +280,16 @@ def paint_lines(picture, coords, direction):
 
 # testing main
 if __name__=='__main__':
-    test_pic = './images/red_cropped.jpg'
+    """    test_pic = './images/red_cropped.jpg'
     image = Image.open(test_pic)
     (xcoords, ycoords) = detect_lines(image,"red")
     print "Red box sizes: (x then y)"
     print get_avg_diff(xcoords)
     print get_avg_diff(ycoords)
-
+    """
     test_pic = './images/blue.jpg'
     image = Image.open(test_pic)
-    (xcoords,ycoords) = detect_lines(image,"blue")
+    (xcoords,ycoords) = detect_lines(image,"test")
     print "Blue box sizes: (x then y)"
     print get_avg_diff(xcoords)
     print get_avg_diff(ycoords)
