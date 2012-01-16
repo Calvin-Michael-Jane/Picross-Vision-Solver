@@ -13,8 +13,8 @@ from math import floor
 global_board_size = 10
 
 def detect(picture):
-    grid = [(4,4),(10,4),(10,10),(4,10)]; # grid corners
-    cell_length = 2;
+    grid = [(4,4),(10,4),(10,10),(4,10)] # grid corners
+    cell_length = 2
     gr = Representations.GridRep(grid, cell_length)
     return gr # grid representation
 

@@ -22,10 +22,10 @@ def find_numbers(puzzlegrid, skewless_picture):
         elif puzzlegrid.grid[i][1] > max_y:
             max_y = puzzlegrid.grid[i][1]
     
-    print min_x
-    print max_x
-    print min_y
-    print max_y
+    #print min_x
+    #print max_x
+    #print min_y
+    #print max_y
     
     # convert image to grayscale array
     grayscale_picture = skewless_picture.convert("L")
@@ -34,16 +34,16 @@ def find_numbers(puzzlegrid, skewless_picture):
     # calculate average change in color per cell
     # compare to threshold, if greater, has number
     thres = 10 #??
-    num_gridperp = int(min_x / puzzlegrid.cell_length)
-    num_grid = int((max_x - min_x) / puzzlegrid.cell_length)
+    left_num_x = int(min_x / puzzlegrid.cell_length)
+    left_num_y = int((max_y - min_y) / puzzlegrid.cell_length)
     
-    print "# cells: "
-    print num_gridperp
-    print num_grid
+    #print "left # cells: "
+    #print left_num_x
+    #print left_num_y
     
     # left
-    for i in range(num_gridperp):
-        for j in range(num_grid):
+    for i in range(left_num_x):
+        for j in range(left_num_y):
             # for each cell, traverse pixels
             
             # calculate average
@@ -64,28 +64,60 @@ def find_numbers(puzzlegrid, skewless_picture):
                     variance += pow(pixels[x, y] - average, 2) #??
             variance /= pow(puzzlegrid.cell_length, 2)
             
-            print "avg: "
-            print average
-            print "var: "
-            print variance
+            #print "avg: "
+            #print average
+            #print "var: "
+            #print variance
             
             # has number, save cell top-left corner in positions
             if variance > thres:
                 x = i * puzzlegrid.cell_length 
-                y = j * puzzlegrid.cell_length
+                y = min_y + j * puzzlegrid.cell_length
                 positions.append((x, y))
                 
     # top
-    pixels = skewless_picture.load()
-    #for x in range(w):
-    #    for y in range(h):
-    #        pix = pixels[x, y]
+    top_num_x = int((max_x - min_x) / puzzlegrid.cell_length)
+    top_num_y = int(min_y / puzzlegrid.cell_length)
+    
+    for i in range(top_num_x):
+        for j in range(top_num_y):
+            # for each cell, traverse pixels
+            
+            # calculate average
+            average = 0
+            for k in range(puzzlegrid.cell_length):
+                for l in range(puzzlegrid.cell_length):
+                    x = i * puzzlegrid.cell_length + k
+                    y = min_y + j * puzzlegrid.cell_length + l
+                    average += pixels[x, y] #??
+            average /= pow(puzzlegrid.cell_length, 2)
+            
+            # calculate variance
+            variance = 0
+            for k in range(puzzlegrid.cell_length):
+                for l in range(puzzlegrid.cell_length):
+                    x = min_x + i * puzzlegrid.cell_length + k
+                    y = j * puzzlegrid.cell_length + l
+                    variance += pow(pixels[x, y] - average, 2) #??
+            variance /= pow(puzzlegrid.cell_length, 2)
+            
+            #print "avg: "
+            #print average
+            #print "var: "
+            #print variance
+            
+            # has number, save cell top-left corner in positions
+            if variance > thres:
+                x = min_x + i * puzzlegrid.cell_length 
+                y = j * puzzlegrid.cell_length
+                positions.append((x, y))
+
     return positions # number positions
 
 
 # testing main
 if __name__=='__main__':
-    test_pic = './testpicture.jpg'
+    test_pic = './blue_9.jpg'
     image = Image.open(test_pic)
     puzzlegrid = DetectGrid.detect(image)
     nums = find_numbers(puzzlegrid, image)
