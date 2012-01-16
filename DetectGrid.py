@@ -5,7 +5,7 @@
 import Image, ImageDraw
 import ImageFilter
 import ImageOps
-import heapq
+#import heapq
 import Representations
 import prewitt
 from math import floor
@@ -30,7 +30,26 @@ def detect_lines(picture, name):
     xcoords = detect_hv_lines(hor_filt,h)
     ycoords = detect_hv_lines(vert_filt,v)
 
-    xcoords = heapq.nlargest(global_
+    # we'll trust the max coordinates as those are near the edge of the image
+    # and are unlikely to be mistaken compared to the min coordinates
+    max_x = max(xcoords)
+    max_y = max(ycoords)
+    min_x = min(xcoords)
+    min_y = min(ycoords)
+
+    projected_avg_x = (max_x-min_x)/global_board_size
+    projected_avg_y = (max_y-min_y)/global_board_size
+
+    #avg_x = vote_avg_diff(xcoords)
+    #avg_y = vote_avg_diff(ycoords)
+    #avg = (avg_x+avg_y)/2
+    print "avg x diff: {}".format(projected_avg_x)
+    print "avg y diff: {}".format(projected_avg_y)
+
+
+    # get an evenly spaced set of lines
+    #xcoords = extrapolate_coords(max_x, projected_avg_x)
+    #ycoords = extrapolate_coords(max_y, projected_avg_y)
 
     paintedh = paint_lines(hor_filt, xcoords,h)
     paintedh.save("./images/painted_lines_hor_"+name+".jpg")
@@ -47,18 +66,40 @@ def detect_lines(picture, name):
     grid_coords.append((min_y,min_x))
     grid_coords.append((max_y,max_x))
 
+
     print "grid_coords:"
     print grid_coords
 
     draw = ImageDraw.Draw(combined)
-    draw.rectangle(grid_coords,fill=128)
+    draw.rectangle(grid_coords,outline=128)
     del draw
     combined.save("./images/painted_lines_both_"+name+".jpg")
 
     return (xcoords,ycoords)
-    
+
+def extrapolate_coords(start, avg):
+    new_coords = []
+    for i in xrange(global_board_size+1):
+        new_coords.append(floor(start-(i*avg)))
+    return new_coords
+
+def vote_avg_diff(coords):
+    coords.sort()
+    votes = {}
+    prev_coord = -1
+    min_range = -1
+    max_range = 1
+    for coord in coords:
+        diff = coord - prev_coord
+        if prev_coord >= 0:
+            for x in range(min_range,max_range+1):
+                if (x+diff) not in votes : votes[x+diff]=0
+                votes[x+diff]+=1
+        prev_coord = coord
+    return max(votes)
 
 def get_avg_diff(coords):
+    coords.sort()
     sum_diffs = 0
     prev_coord = -1
     for coord in coords:
@@ -80,7 +121,7 @@ def detect_hv_lines(filtered,direction):
     # spot
     num_passes = 20
     threshold = 120
-    window_size = 10
+    window_size = 15
     width,height = filtered.size
     vert_counts = {}
     pic_h = filtered.load()
@@ -140,7 +181,7 @@ def detect_hv_lines(filtered,direction):
 # and remove lines that do not seem to be at the equal spacing
 # found within the actual grid
 def clean_lines(coords):
-    min_space = 4
+    min_space = 8
 
     coords.sort()
     prev_coord = coords[0]
@@ -157,15 +198,16 @@ def clean_lines(coords):
     # now get rid of extraneous lines that are outside the grid
     # and get the average grid width
     avg_diff = get_avg_diff(cleaned_coords)
-    max_tolerated = avg_diff * 3
+    max_tolerated = avg_diff * 2
     min_tolerated = avg_diff * 0.3
     print 'avg_diff: {}'.format(avg_diff)
     
     prev_coord = -1
     for coord in cleaned_coords:
         diff = coord - prev_coord
-        print diff
+        print '{0} to {1} has diff: {2}'.format(prev_coord,coord,diff)
         if (prev_coord >= 0) and ((diff > max_tolerated) or (diff < min_tolerated)):
+            print "{0}--diff removed; {1}--coord removed".format(diff,prev_coord)
             cleaned_coords.remove(prev_coord)
         prev_coord = coord
 
@@ -178,6 +220,7 @@ def paint_lines(picture, coords, direction):
     outpixels = outimg.load()
     v="vertical"
     h="horizontal"
+    print "current coords: {}".format(coords)
     for coord in coords:
         if direction==v:
             max_line = height
@@ -187,21 +230,22 @@ def paint_lines(picture, coords, direction):
             if direction==v:
                 outpixels[coord,i] = 255
             elif direction==h:
+                #print "fail i: {0}\tfail coord: {1}".format(i, coord)
                 outpixels[i,coord] = 255
     print 'coords: {}'.format(coords)
-    return Image.blend(ImageOps.invert(outimg).convert("RGB"),picture.convert("RGB"),0.4)
+    return Image.blend(ImageOps.invert(outimg).convert("RGB"),picture.convert("RGB"),0.2)
 
 
 # testing main
 if __name__=='__main__':
-    test_pic = './red_cropped.jpg'
+    test_pic = './images/red_cropped.jpg'
     image = Image.open(test_pic)
     (xcoords, ycoords) = detect_lines(image,"red")
     print "Red box sizes: (x then y)"
     print get_avg_diff(xcoords)
     print get_avg_diff(ycoords)
 
-    test_pic = './blue.jpg'
+    test_pic = './images/blue.jpg'
     image = Image.open(test_pic)
     (xcoords,ycoords) = detect_lines(image,"blue")
     print "Blue box sizes: (x then y)"
