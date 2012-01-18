@@ -1,0 +1,62 @@
+Have a non-directory at the top, so creating directory top_dir
+Adding /home/michael/429/./AntiSkew.py to top_dir
+Adding /home/michael/429/./COS429FinalProject.pptx to top_dir
+Adding /home/michael/429/./DetectGrid.py to top_dir
+Adding /home/michael/429/./DisplayPuzzle.py to top_dir
+Adding /home/michael/429/./FindNumbers.py to top_dir
+Adding /home/michael/429/./GetPicture.py to top_dir
+Adding /home/michael/429/./NeuralNetwork.py to top_dir
+Adding /home/michael/429/./OCRNumbers.py to top_dir
+Adding /home/michael/429/./PicrossSolver.py to top_dir
+Adding /home/michael/429/./README to top_dir
+Adding /home/michael/429/./ReadPic.py to top_dir
+Adding /home/michael/429/./Representations.py to top_dir
+Adding /home/michael/429/./SLOCCOUNT.txt to top_dir
+Creating filelist for data
+Adding /home/michael/429/./fakesolution.jpg to top_dir
+Creating filelist for images
+Adding /home/michael/429/./imagesnap to top_dir
+Adding /home/michael/429/./lines.py to top_dir
+Adding /home/michael/429/./picross.py to top_dir
+Adding /home/michael/429/./picross.sh to top_dir
+Adding /home/michael/429/./prewitt.py to top_dir
+Adding /home/michael/429/./prewitt_on_webcam.jpg to top_dir
+Adding /home/michael/429/./snapshot-laplace.png to top_dir
+Adding /home/michael/429/./snapshot.jpg to top_dir
+Adding /home/michael/429/./snapshot_e.jpg to top_dir
+Adding /home/michael/429/./test.sh to top_dir
+Adding /home/michael/429/./testfilters.py to top_dir
+Adding /home/michael/429/./traindata.py to top_dir
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+902     top_dir         python=871,sh=31
+0       data            (none)
+0       images          (none)
+
+
+Totals grouped by language (dominant language first):
+python:         871 (96.56%)
+sh:              31 (3.44%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 902
+Development Effort Estimate, Person-Years (Person-Months) = 0.18 (2.15)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.28 (3.35)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 0.64
+Total Estimated Cost to Develop                           = $ 24,244
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."
